@@ -7,9 +7,7 @@ It uses line based [config files](#structure) of GitHub repository names for dep
 
 # Installation
 
-- Clone this repository
-- Run `make` in it (to build the binary)
-- Run `make install` to install globally
+Simply add the `bochka` shell script to your `PATH`.
 
 # Usage
 
@@ -41,10 +39,11 @@ https://example.com/other/lib
 
 ---
 
-A _bochka_ project **must** have flat source file structure like this:
+A _bochka_ project's headers will be included like this:
 
-- Source files, named `*.c` (no tests are allowed yet, see [coming](#coming) section)
-- Header files, named `*.h` (they will be included like: `#include "pkg/user/repo/file.h"`)
+```c
+#include "pkg/repo/name.h"
+```
 
 ---
 
@@ -64,7 +63,7 @@ A typical _bochka_ project may look like this:
 |-- other.h
 ```
 
-> Object files (`name.o`, `other.o`) and a static library (`libname.a`, assuming the content of `Bochkapkg` is just `name`) are compiled from the sources.
+> Object files (`name.o`, `other.o`) and a static library (`libname.a`, assuming the content of `Bochkapkg` is just `name`) are compiled from the sources (optionally you can use the default `Makefile`).
 
 # Logic
 
