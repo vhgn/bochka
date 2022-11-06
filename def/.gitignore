@@ -1,0 +1,13 @@
+# This is a conventional .gitignore file for projects created with `bochka create`
+
+# libraries
+/lib/
+
+# packages
+/pkg/
+
+# object files
+/*.o
+
+# static library
+/*.a
