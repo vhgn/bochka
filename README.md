@@ -1,7 +1,7 @@
 # Description
 
 Bochka is a simple package manager for C that I needed so much.
-It uses line based [config files](#structure) of GitHub repository names for dependencies.
+It uses line based [config files](#structure) of Git repository URLs for dependencies.
 
 > Just a side-project, not ready for any serious use
 
