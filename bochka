@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# Package manager for C
+# Copyright (C) 2022 Vahagn @ https://github.com/vhgn
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+_init() {
+	mkdir -p pkg
+	mkdir -p lib
+
+	_deps=$(_get_deps .)
+
+	for _dep in $_deps
+	do
+		_fetch_pkg $_dep
+		_build_lib "pkg/$(_get_base $_dep)"
+	done
+}
+
+_build_lib() {
+	_name=$(_get_name $1)
+	_deps=$(_get_deps $1)
+
+	for _dep in $_deps
+	do
+		_fetch_pkg $_dep
+		_build_lib $_dep
+	done
+
+	make -C $1
+	cp "$1/lib$_name.a" lib
+}
+
+_fetch_pkg() {
+	_dest="pkg/$(_get_base $1)"
+	if [ ! -d "$_dest" ]; then
+		git clone $1 $_dest
+	fi
+}
+
+_get_name() {
+	head -1 "$1/Bochkapkg"
+}
+
+_get_deps() {
+	_file="$1/Bochkadeps"
+	if [ -f "$_file" ]; then
+		cat $_file
+	fi
+}
+
+_get_base() {
+	echo $1 | sed 's/.*\///'
+}
+
+_init
