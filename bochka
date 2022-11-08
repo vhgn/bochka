@@ -40,7 +40,11 @@ _build_lib() {
 	done
 
 	make -C $1
-	cp "$1/lib$_name.a" lib
+
+	_lib="$1/lib$_name.a"
+	if [ -f "$_lib" ]; then
+		cp $lib lib
+	fi
 }
 
 _fetch_pkg() {
